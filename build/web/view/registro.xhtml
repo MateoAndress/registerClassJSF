@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+        <style>
+            body{
+                background-color: bisque;
+            }
+            .ui-datatable tbody tr {
+                background-color: appworkspace;
+            }
+            .ui-dialog{
+                background-color: appworkspace;
+            }
+            .ui-dialog-titlebar{
+                background-color: brown;
+            }
+            .ui-dialog-title-dialog{
+                background-color: brown;
+            }
+
+            .ui-panelgrid td, .ui-panelgrid tr
+            {
+                border-style: none !important;
+                background-color: appworkspace;
+            }
+            .ui-fieldset{
+                background-color: beige;
+            }
+        </style>
+    </h:head>
+    <h:body>
+
+        <p:growl id="msj" />
+        <h:form id="nuevo">
+            <p:fieldset legend="Registro de profesores" toggleable="true">
+                <p:panelGrid columns="1">
+                    <p:commandButton value="Nuevo" oncomplete="PF('valor').show();"/>
+                </p:panelGrid>
+            </p:fieldset>
+        </h:form>
+        <p:dialog widgetVar="valor" modal="true" showEffect="clip" header="Nuevo Registro" resizable="false">
+            <p:ajax event="close" listener="#{managedRegistro.limpiar()}" update=":p" />
+            <h:form id="p">
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Ingrese Fecha"/>
+                    <p:calendar value="#{managedRegistro.registro.fecha}"/>
+                    <p:outputLabel value="Seleccione Materia" />
+                    <p:selectOneMenu value="#{managedRegistro.materia.id_materia}">
+                        <f:selectItems value="#{managedMateria.listaMateria}" var="m" 
+                                       itemValue="#{m.id_materia}" itemLabel="#{m.materia}" />
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Seleccione Maestro" />
+                    <p:selectOneMenu value="#{managedRegistro.maestro.id_maestro}">
+                        <f:selectItems value="#{managedMaestro.listaMaestro}" var="ma" 
+                                       itemValue="#{ma.id_maestro}" itemLabel="#{ma.nombre} #{ma.apellido}"  />
+                    </p:selectOneMenu>
+                    <p:commandButton value="Save" actionListener="#{managedRegistro.guardar()}" oncomplete="PF('valor').hide();"
+                                     rendered="#{managedRegistro.registro.id == 0}"
+                                     update=":Datos p :msj"/>
+                    <p:commandButton value="Update" actionListener="#{managedRegistro.actualizar()}" oncomplete="PF('valor').hide();"
+                                     rendered="#{managedRegistro.registro.id != 0}"
+                                     update=":Datos p :msj"/>
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+        <h:form id="Datos">
+            <p:fieldset legend="Datos" toggleable="true">
+                <p:dataTable value="#{managedRegistro.listaRegistro}" var="r">
+                    <p:column headerText="Id">
+                        <h:outputText value="#{r.id}" />
+                    </p:column>
+                    <p:column headerText="Fecha">
+                        <h:outputText value="#{r.fecha}">
+                            <f:convertDateTime pattern="YYYY-MM-dd" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Nombre">
+                        <h:outputText value="#{r.maestro.nombre}" />
+                    </p:column>
+                    <p:column headerText="Apellido">
+                        <h:outputText value="#{r.maestro.apellido}" />
+                    </p:column>
+                    <p:column headerText="Materia">
+                        <h:outputText value="#{r.materia.materia}" />
+                    </p:column>
+                    <p:column headerText="Eliminar">
+                        <p:commandButton value="Eliminar" actionListener="#{managedRegistro.eliminar(r)}" 
+                                         update=":Datos :msj"/>
+                    </p:column>
+                    <p:column headerText="Actualizar">
+                        <p:commandButton value="Actualizar" actionListener="#{managedRegistro.cargarDatos(r)}" 
+                                         update=":p" oncomplete="PF('valor').show();"/>
+                    </p:column>
+                </p:dataTable>
+            </p:fieldset>
+        </h:form>
+    </h:body>
+</html>

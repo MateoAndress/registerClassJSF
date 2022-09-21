@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:p="http://primefaces.org/ui">
+     
+    <h:head>
+        <title>Facelet Title</title>
+        
+    </h:head>
+    <h:body>
+        <p:panelGrid columns="3" style="margin: 0 auto;">
+            <h:link outcome="view/registro">
+                <p:graphicImage library="img" name="img1.jpg" style="width: 100px; height: 100px;" />
+            </h:link>
+            <h:link outcome="view/materia">
+                <p:graphicImage library="img" name="materia.png" style="width: 100px; height: 100px;" />
+            </h:link>
+            <h:link outcome="view/maestro">
+                <p:graphicImage library="img" name="maestro.jpg" style="width: 100px; height: 100px;" />
+            </h:link>
+        </p:panelGrid>
+        
+        <p:panel id="horizontal" header="Bienvenido a la gestión de tus clases" toggleable="true" toggleOrientation="horizontal">
+            <br />
+            <h:panelGrid columns="2" cellpadding="10">
+                <p:graphicImage library="img" name="img1.jpg" style="width: 100px; height: 100px;" />
+                <h:outputText
+                    value="Al ingresar a la interfaz podrás hacer el registro en tus materias." />
+                <h:link outcome="view/registro">
+                    Registro
+                </h:link><br/>
+                
+                <p:graphicImage library="img" name="materia.png" style="width: 100px; height: 100px;" />
+                <h:outputText
+                    value="Al ingresar a la interfaz podrás hacer el registro de las materias." />
+                <h:link outcome="view/materia">
+                    Materias
+                </h:link><br/>
+                
+                <p:graphicImage library="img" name="maestro.jpg" style="width: 100px; height: 100px;" />
+                <h:outputText
+                    value="Al ingresar a la interfaz podrás hacer el registro de los profesores." />
+                <h:link outcome="view/maestro">
+                    Profesores
+                </h:link><br/>                
+            </h:panelGrid>            
+    </p:panel>
+    </h:body>
+</html>
